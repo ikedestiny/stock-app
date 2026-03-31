@@ -1,0 +1,342 @@
+# NGX Stock Tracking App — Backend Roadmap (FastAPI)
+
+## Overview
+
+This backend powers a stock tracking application for Nigerian Exchange (NGX) data.
+
+Built with:
+
+* FastAPI (API layer)
+* PostgreSQL (data storage)
+* SQLAlchemy (ORM)
+* Optional: Redis, background workers
+
+---
+
+## Guiding Principles
+
+* Build **incrementally**
+* Each stage must be **working and testable**
+* No skipping ahead
+* No adding features outside the current stage
+
+---
+
+# Stage 0 — Environment Setup ✅
+
+### Goal
+
+Working development environment
+
+### Tasks
+
+* Create virtual environment
+* Install dependencies (`requirements.txt`)
+* Run FastAPI server
+
+### Deliverable
+
+* `GET /` returns:
+
+```json
+{ "message": "working" }
+```
+
+---
+
+# Stage 1 — Basic API Structure
+
+### Goal
+
+Understand FastAPI fundamentals
+
+### Tasks
+
+* Create `main.py`
+* Add routes:
+
+  * `GET /stocks/{symbol}`
+  * `GET /stocks?limit=10`
+* Use path + query parameters
+
+### Deliverable
+
+Mock response:
+
+```json
+{
+  "symbol": "DANGCEM",
+  "price": 350
+}
+```
+
+---
+
+# Stage 2 — Project Architecture
+
+### Goal
+
+Set up scalable structure
+
+### Tasks
+
+* Create folders:
+
+  * `api/`
+  * `services/`
+  * `repositories/`
+  * `models/`
+  * `schemas/`
+* Split routes into modules
+
+### Deliverable
+
+Clean folder structure, app still runs
+
+---
+
+# Stage 3 — Database Integration
+
+### Goal
+
+Connect to PostgreSQL
+
+### Tasks
+
+* Setup SQLAlchemy engine
+* Create DB session
+* Configure `.env`
+
+### Deliverable
+
+App connects to database without errors
+
+---
+
+# Stage 4 — Core Models
+
+### Goal
+
+Define database schema
+
+### Models
+
+* User
+* Stock
+* Price
+* Watchlist
+
+### Deliverable
+
+Tables created successfully
+
+---
+
+# Stage 5 — CRUD (Database Operations)
+
+### Goal
+
+Read/write data
+
+### Tasks
+
+* Create repositories:
+
+  * `user_repo`
+  * `stock_repo`
+* Implement:
+
+  * create stock
+  * get stock
+  * list stocks
+
+### Deliverable
+
+API returns real DB data
+
+---
+
+# Stage 6 — Stock Data Ingestion (CRITICAL)
+
+### Goal
+
+Fetch real NGX data
+
+### Tasks
+
+* Build scraper/API client
+* Fetch:
+
+  * stock name
+  * symbol
+  * price
+* Store in DB
+
+### Deliverable
+
+Database populated with real stock data
+
+---
+
+# Stage 7 — Price History
+
+### Goal
+
+Track time-series data
+
+### Tasks
+
+* Create `Price` model
+* Store historical prices
+* Endpoint:
+
+  * `GET /stocks/{symbol}/history`
+
+### Deliverable
+
+Returns time-series data
+
+---
+
+# Stage 8 — Authentication
+
+### Goal
+
+User system
+
+### Tasks
+
+* Register/login endpoints
+* Password hashing
+* JWT tokens
+
+### Deliverable
+
+User can:
+
+* register
+* login
+* access protected routes
+
+---
+
+# Stage 9 — Watchlist System
+
+### Goal
+
+User-specific tracking
+
+### Tasks
+
+* Add/remove stocks
+* Get user watchlist
+
+### Deliverable
+
+User sees personal stock list
+
+---
+
+# Stage 10 — Background Jobs
+
+### Goal
+
+Automate data updates
+
+### Tasks
+
+* Schedule price updates
+* Use:
+
+  * Celery OR
+  * simple cron job
+
+### Deliverable
+
+Stock prices update automatically
+
+---
+
+# Stage 11 — Performance Improvements
+
+### Goal
+
+Optimize system
+
+### Tasks
+
+* Add caching (Redis)
+* Reduce API calls
+* Optimize DB queries
+
+---
+
+# Stage 12 — WebSockets (Optional Advanced)
+
+### Goal
+
+Real-time updates
+
+### Tasks
+
+* Implement WebSocket endpoint
+* Push price updates to frontend
+
+---
+
+# Stage 13 — Deployment
+
+### Goal
+
+Make app live
+
+### Tasks
+
+* Dockerize backend
+* Deploy to:
+
+  * VPS / Render / Railway
+* Setup environment variables
+
+### Deliverable
+
+Public API endpoint
+
+---
+
+# Definition of Done (VERY IMPORTANT)
+
+You are done when:
+
+* Backend is deployed
+* API returns real NGX data
+* Users can track stocks
+
+---
+
+# Rules for Execution
+
+1. Only work on ONE stage at a time
+2. Do not add features early
+3. Each stage must be testable
+4. If stuck → debug, don’t restart
+
+---
+
+# Recommended Order (STRICT)
+
+Stage 0 → 1 → 2 → 3 → 4 → 5 → 6
+(Stop here before anything advanced)
+
+---
+
+# Final Note
+
+Stage 6 (data ingestion) is the hardest and most important part.
+
+If you complete Stage 6:
+→ You already have a strong backend project
+
+Everything after that is enhancement.
+
+---
